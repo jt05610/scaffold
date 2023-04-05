@@ -1,0 +1,74 @@
+meta:
+  node: force_pump
+  address: 0x02
+  author: jtaylor
+  date: 30 Mar 2023
+
+tables:
+  discrete_inputs:
+    - name: is_moving
+      desc: returns 1 if needle is currently moving, otherwise 0
+
+  coils:
+    - name: start
+      desc: starts needle
+    - name: stop
+      desc: stops needle
+    - name: home
+      desc: homes needle
+    - name: move_to_stall
+      desc: Moves as far forward as possible until stall position is reached
+    - name: set_zero
+      desc: Sets current position as 0
+    - name: enable
+      desc: returns if needle is enabled. Enable needle by writing 1
+      params:
+        - enabled:
+            type: int
+            desc: 1 if you want to enable or 0 to disable. Any other value is treated as a 1.
+
+  input_registers:
+    - name: current_pos
+      desc: returns the current position of the needle in µm
+    - name: current_vel
+      desc: returns the current velocity of the needle in µm / s
+    - name: tstep
+      desc: returns measured time between steps
+    - name: force
+      desc: returns raw force reading from pump
+
+  holding_registers:
+    - name: target_pos
+      desc: returns target position in µm
+      params:
+        - pos:
+            type: int
+            desc: target position in µm
+
+    - name: target_vel
+      desc: returns target velocity in µm / s
+      params:
+        - vel:
+            type: int
+            desc: target velocity in µm / s
+
+    - name: move_to
+      desc: returns distance from target position in µm
+      params:
+        - pos:
+            type: int
+            desc: target position in µm
+
+    - name: accel
+      desc: returns the current acceleration of the needle in µm / s^2
+      params:
+        - accel:
+            type: int
+            desc: New acceleration in µm / s^2
+
+    - name: stallguard
+      desc: returns current stallguard settings from TMC2209
+      params:
+        - sg_thresh:
+            type: int
+            desc: stallguard threshold value
