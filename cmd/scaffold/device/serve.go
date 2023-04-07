@@ -2,7 +2,7 @@
 Copyright © 2023 Jonathan Taylor <jonrtaylor12@gmail.com>
 */
 
-package cmd
+package device
 
 import (
 	"github.com/spf13/cobra"

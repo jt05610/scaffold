@@ -1,11 +1,12 @@
 /*
 Copyright © 2023 NAME HERE <EMAIL ADDRESS>
-
 */
 package main
 
-import "scaffold/cmd"
+import (
+	"scaffold/cmd/scaffold/device"
+)
 
 func main() {
-	cmd.Execute()
+	device.Execute()
 }

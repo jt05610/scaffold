@@ -1,12 +1,10 @@
 /*
 Copyright © 2023 NAME HERE <EMAIL ADDRESS>
-
 */
-package cmd
+package device
 
 import (
 	"fmt"
-
 	"github.com/spf13/cobra"
 )
 
