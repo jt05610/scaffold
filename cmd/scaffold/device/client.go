@@ -6,33 +6,40 @@ package device
 import (
 	"fmt"
 	"github.com/spf13/cobra"
+	"go.uber.org/zap"
+	"os"
+	"scaffold/modbus"
+	"scaffold/node/goClient"
+	"scaffold/node/yaml"
 )
 
 // clientCmd represents the client command
 var clientCmd = &cobra.Command{
 	Use:   "client",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Short: "client is used to generate a device API client in the chosen language",
+	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("client called")
+		logger, err := zap.NewDevelopment()
+		if err != nil {
+			panic(err)
+		}
+		device := yaml.NewYAMLDevice("127.0.0.1", 8081, modbus.DefaultClient(logger))
+		device.Load("./nodes")
+		srv := goClient.NewService("https://127.0.0.1:8081")
+		for _, n := range device.Nodes {
+			out, err := os.Create(fmt.Sprintf("./clients/%s_client.go", n.Node))
+			if err != nil {
+				zap.Error(err)
+			}
+			err = srv.Flush(out, n)
+			if err != nil {
+				zap.Error(err)
+			}
+		}
 	},
 }
 
 func init() {
 	nodeCmd.AddCommand(clientCmd)
-
-	// Here you will define your flags and configuration settings.
-
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// clientCmd.PersistentFlags().String("foo", "", "A help for foo")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// clientCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	clientCmd.PersistentFlags().StringP("lang", "-l", "go", "the language to build the client for")
 }
