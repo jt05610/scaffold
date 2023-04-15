@@ -81,7 +81,7 @@ func NewDevice(name string, dest string) {
 	}
 }
 
-func NewNode(name string, parent string, srv Service) {
+func NewNode(name, kind, parent string, srv Service) {
 	u, err := user.Current()
 	if err != nil {
 		panic(err)

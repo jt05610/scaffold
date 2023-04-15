@@ -15,7 +15,7 @@ func TestNewDevice(t *testing.T) {
 
 func TestNewNode(t *testing.T) {
 	srv := yaml.NewYAMLService()
-	node.NewNode("fake_node", "./testingResult/fake_device/nodes", srv)
+	node.NewNode("fake_node", "software", "./testingResult/fake_device/nodes", srv)
 }
 
 func TestLoadNodes(t *testing.T) {

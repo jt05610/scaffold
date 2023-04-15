@@ -1,40 +1,44 @@
 /*
-Copyright © 2023 NAME HERE <EMAIL ADDRESS>
+Copyright © 2023 Jonathan Taylor <jonrtaylor12@gmail.com>
 */
+
 package device
 
 import (
-	"fmt"
-	"scaffold/cmd"
-
 	"github.com/spf13/cobra"
+	"os"
+	"path"
+	"scaffold/node"
+	"scaffold/node/yaml"
 )
 
 // newCmd represents the new command
 var newCmd = &cobra.Command{
 	Use:   "new",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Short: "Create the project structure of a new node",
+	Long:  `Generate a project structure where you will define and store all code related to a new node`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("new called")
+		srv := yaml.NewYAMLService()
+		n, err := cmd.PersistentFlags().GetString("name")
+		if err != nil {
+			panic(err)
+		}
+		k, err := cmd.PersistentFlags().GetString("kind")
+		if err != nil {
+			panic(err)
+		}
+		home, err := os.UserHomeDir()
+		p := path.Join(home, "scaffold", "nodes")
+		err = os.MkdirAll(p, 0777)
+		if err != nil {
+			panic(err)
+		}
+		node.NewNode(n, k, p, srv)
 	},
 }
 
 func init() {
-	cmd.nodeCmd.AddCommand(newCmd)
-
-	// Here you will define your flags and configuration settings.
-
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// newCmd.PersistentFlags().String("foo", "", "A help for foo")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// newCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	nodeCmd.AddCommand(newCmd)
+	newCmd.PersistentFlags().String("kind", "software", "The kind of node. Can be software or hardware")
+	newCmd.PersistentFlags().String("name", "newNode", "The name of your node. Example: linear_axis ")
 }
