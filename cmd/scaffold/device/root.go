@@ -15,7 +15,7 @@ var rootCmd = &cobra.Command{
 	Version: "0.1.0",
 	Short:   "Scaffold is used to create nodes and run devices",
 	Long: `To initialize a robot project, run
-	scaffold init -n <device_name>
+	scaffold device init <device_name>
 `,
 }
 

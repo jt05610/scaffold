@@ -67,8 +67,3 @@ research in multiple manuscripts that are under preparation for submission
 to biomedical journals. 
 
 # Acknowledgements
-
-I would like to acknowledge Brett Lucas Baxley for getting me interested in
-software architecture in the first place and answering my endless list of naive
-questions, and Michael Kristofich for help with video tutorial planning and
-production.
