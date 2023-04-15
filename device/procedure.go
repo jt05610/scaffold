@@ -1,6 +1,9 @@
 package device
 
-import "sync"
+import (
+	"fmt"
+	"sync"
+)
 
 type Step struct {
 	wg      sync.WaitGroup
@@ -22,4 +25,11 @@ func (s *Step) Run() {
 		}(t)
 	}
 	s.wg.Wait()
+}
+
+func (p *Proc) Run() {
+	for i, s := range p.Steps {
+		fmt.Printf("Starting step %v/%v\n", i, len(p.Steps))
+		s.Run()
+	}
 }
