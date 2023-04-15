@@ -65,11 +65,11 @@ type EndpointParam struct {
 }
 
 type Endpoint struct {
-	Func        string         `json:"func"`
-	Route       string         `json:"route"`
-	Method      string         `json:"method"`
-	Description string         `json:"description"`
-	Param       *EndpointParam `json:"params,omitempty"`
+	Func        string         `goClient:"func"`
+	Route       string         `goClient:"route"`
+	Method      string         `goClient:"method"`
+	Description string         `goClient:"description"`
+	Param       *EndpointParam `goClient:"params,omitempty"`
 }
 
 func (n *Node) Endpoints(baseURL string) []*Endpoint {
@@ -97,7 +97,7 @@ func (n *Node) Endpoints(baseURL string) []*Endpoint {
 						param.Type = string(p.Type)
 						param.Description = p.Description
 						param.NameCap = strcase.ToCamel(paramName)
-						param.Tag = fmt.Sprintf("`json:\"%s\"`", param.Name)
+						param.Tag = fmt.Sprintf("`goClient:\"%s\"`", param.Name)
 					}
 					n.paramLookup[route] = param.Name
 				} else {

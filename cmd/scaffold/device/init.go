@@ -29,6 +29,6 @@ var initCmd = &cobra.Command{
 
 func init() {
 	rootCmd.AddCommand(initCmd)
-	rootCmd.PersistentFlags().String("name", "newDevice", "device name")
-	rootCmd.PersistentFlags().StringP("dest", "d", ".", "specify the device location (defaults to current directory)")
+	initCmd.PersistentFlags().String("name", "newDevice", "device name")
+	initCmd.PersistentFlags().StringP("dest", "d", ".", "specify the device location (defaults to current directory)")
 }

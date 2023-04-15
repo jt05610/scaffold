@@ -1,4 +1,4 @@
-package json
+package goClient
 
 import (
 	"io"
@@ -22,7 +22,7 @@ package device
 
 import (
 	"bytes"
-	"encoding/json"
+	"encoding/goClient"
 	"errors"
 	"fmt"
 	"net/http"
@@ -43,7 +43,7 @@ func (c *Client){{.Func}}() (uint16, error) {
 	if err != nil {
 		panic(err)
 	}
-	d := json.NewDecoder(r.Body)
+	d := goClient.NewDecoder(r.Body)
 	res := make(map[string]uint16, 0)
 	err = d.Decode(&res)
 	if err != nil {
@@ -64,12 +64,12 @@ func (c *Client){{.Func}}({{if .Param}}{{.Param.Name}} {{.Param.Type}}{{end}}) e
 	}{
 		{{.Param.NameCap}}: uint16({{.Param.Name}}),
 	}
-	err := json.NewEncoder(buf).Encode(&req)
+	err := goClient.NewEncoder(buf).Encode(&req)
 	if err != nil {
 		panic(err)
 	}
 	{{end}}
-	resp, err := http.Post("{{.Route}}", "application/json", buf)
+	resp, err := http.Post("{{.Route}}", "application/goClient", buf)
 	if err != nil {
 		panic(err)
 	}
@@ -112,6 +112,6 @@ func (n *Node) Flush(w io.Writer, node *node.Node) error {
 	return nil
 }
 
-func NewJSONService(baseUrl string) node.Service {
+func NewService(baseUrl string) node.Service {
 	return &Node{baseUrl: baseUrl}
 }

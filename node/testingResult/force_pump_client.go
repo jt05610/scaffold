@@ -232,7 +232,7 @@ func (c *ClientForcePump) PostEnable(enabled int) error {
 	buf := new(bytes.Buffer)
 
 	req := struct {
-		Enabled uint16 `json:"enabled"`
+		Enabled uint16 `goClient:"enabled"`
 	}{
 		Enabled: uint16(enabled),
 	}
@@ -340,7 +340,7 @@ func (c *ClientForcePump) PostTargetPos(pos int) error {
 	buf := new(bytes.Buffer)
 
 	req := struct {
-		Pos uint16 `json:"pos"`
+		Pos uint16 `goClient:"pos"`
 	}{
 		Pos: uint16(pos),
 	}
@@ -386,7 +386,7 @@ func (c *ClientForcePump) PostTargetVel(vel int) error {
 	buf := new(bytes.Buffer)
 
 	req := struct {
-		Vel uint16 `json:"vel"`
+		Vel uint16 `goClient:"vel"`
 	}{
 		Vel: uint16(vel),
 	}
@@ -432,7 +432,7 @@ func (c *ClientForcePump) PostMoveTo(pos int) error {
 	buf := new(bytes.Buffer)
 
 	req := struct {
-		Pos uint16 `json:"pos"`
+		Pos uint16 `goClient:"pos"`
 	}{
 		Pos: uint16(pos),
 	}
@@ -478,7 +478,7 @@ func (c *ClientForcePump) PostAccel(accel int) error {
 	buf := new(bytes.Buffer)
 
 	req := struct {
-		Accel uint16 `json:"accel"`
+		Accel uint16 `goClient:"accel"`
 	}{
 		Accel: uint16(accel),
 	}
@@ -524,7 +524,7 @@ func (c *ClientForcePump) PostStallguard(sgThresh int) error {
 	buf := new(bytes.Buffer)
 
 	req := struct {
-		SgThresh uint16 `json:"sgThresh"`
+		SgThresh uint16 `goClient:"sgThresh"`
 	}{
 		SgThresh: uint16(sgThresh),
 	}

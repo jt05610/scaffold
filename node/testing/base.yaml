@@ -1,7 +1,0 @@
-diag:
-  - name: echo
-    desc: Replies with passed message
-    params:
-      - message:
-          type: "[]byte"
-          desc: Byte string to send to device

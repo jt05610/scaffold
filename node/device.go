@@ -33,7 +33,7 @@ func (d *Device) Serve() {
 		ReadHeaderTimeout: time.Second,
 	}
 
-	err := srv.ListenAndServeTLS("loppu.io+5.pem", "loppu.io+5-key.pem")
+	err := srv.ListenAndServe()
 	if err != nil {
 		panic(err)
 	}
