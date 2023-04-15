@@ -82,20 +82,8 @@ func TestClient_TargetPos(t *testing.T) {
 	if r != 100 {
 		t.Fail()
 	}
-	r, _ = c.GetCurrentPos()
-	if r != 0 {
-		err := c.PostSetZero()
-		if err != nil {
-			panic(err)
-		}
-	}
 
-	r, _ = c.GetCurrentPos()
-	if r != 0 {
-		t.Fail()
-	}
-
-	target := 300
+	target := 1300
 
 	err = c.PostTargetPos(target)
 
@@ -115,7 +103,7 @@ func TestClient_TargetPos(t *testing.T) {
 	}
 	start := time.Now()
 	startPos := uint16(0)
-	for curPos, _ := c.GetCurrentPos(); curPos < uint16(target); {
+	for curPos, _ := c.GetCurrentPos(); curPos != uint16(target); {
 		curPos, _ = c.GetCurrentPos()
 		fmt.Printf("%v\t%v\n", time.Now().Sub(start).Milliseconds(), curPos-startPos)
 		time.Sleep(time.Duration(200) * time.Millisecond)

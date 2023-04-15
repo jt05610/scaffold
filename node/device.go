@@ -68,6 +68,8 @@ func NewDevice(name string, dest string) {
 	for _, p := range []string{
 		path.Join(dest, name),
 		path.Join(dest, name, "nodes"),
+		path.Join(dest, name, "modules"),
+		path.Join(dest, name, ".drivers"),
 		path.Join(dest, name, "clients"),
 		path.Join(dest, name, "procedures"),
 		path.Join(dest, name, "data"),
