@@ -7,15 +7,18 @@ import (
 	"scaffold/modbus/pdu"
 	"scaffold/modbus/serial"
 	"scaffold/modbus/wire"
+	"sync"
 )
 
 type Client struct {
 	logger *zap.Logger
 	dl     *serial.DataLink
+	mu     sync.Mutex
 }
 
 func (c *Client) Request(ctx context.Context, addr byte, req *pdu.ModbusPDU) (*pdu.ModbusPDU, error) {
 	s := pdu.NewSerialPDU(addr, req)
+	c.mu.Lock()
 	_, err := c.dl.Send(s)
 	if err != nil {
 		panic(err)
@@ -33,6 +36,7 @@ func (c *Client) Request(ctx context.Context, addr byte, req *pdu.ModbusPDU) (*p
 	for {
 		select {
 		case res := <-resCh:
+			c.mu.Unlock()
 			return res.PDU, nil
 		case <-ctx.Done():
 			return nil, errors.New("timeout during request")

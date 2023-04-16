@@ -1,6 +1,7 @@
 /*
 Copyright © 2023 NAME HERE <EMAIL ADDRESS>
 */
+
 package device
 
 import (
@@ -41,5 +42,5 @@ var clientCmd = &cobra.Command{
 
 func init() {
 	nodeCmd.AddCommand(clientCmd)
-	clientCmd.PersistentFlags().StringP("lang", "-l", "go", "the language to build the client for")
+	clientCmd.PersistentFlags().StringP("lang", "l", "go", "the language to build the client for")
 }
