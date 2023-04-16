@@ -3,7 +3,7 @@ package goClient
 import (
 	"io"
 	"net/http"
-	"scaffold/node"
+	"scaffold/node/hardware"
 	"text/template"
 )
 
@@ -11,7 +11,7 @@ type Node struct {
 	baseUrl string
 }
 
-func (n *Node) Load(r io.Reader) (*node.Node, error) {
+func (n *Node) Load(r io.Reader) (*hardware.Node, error) {
 	return nil, nil
 }
 
@@ -70,13 +70,13 @@ func (c *Client){{.Func}}({{if .Param}}{{.Param.Name}} {{.Param.Type}}{{end}}) e
 	}
 	{{end}}
 	resp, err := http.Post("{{.Route}}", "application/goClient", buf)
-	if err != nil {
+	if err != nil && err != io.EOF {
 		panic(err)
 	}
 
 	respBuf := make([]byte, 2)
 	_, err = resp.Body.Read(respBuf)
-	if err != nil {
+	if err != nil && err != io.EOF {
 		panic(err)
 	}
 	if resp.StatusCode == 200 && string(respBuf) == "ok" {
@@ -87,7 +87,7 @@ func (c *Client){{.Func}}({{if .Param}}{{.Param.Name}} {{.Param.Type}}{{end}}) e
 }
 `
 
-func (n *Node) Flush(w io.Writer, node *node.Node) error {
+func (n *Node) Flush(w io.Writer, node *hardware.Node) error {
 	_, err := w.Write([]byte(clientTemplate))
 
 	if err != nil {
@@ -112,6 +112,6 @@ func (n *Node) Flush(w io.Writer, node *node.Node) error {
 	return nil
 }
 
-func NewService(baseUrl string) node.Service {
+func NewService(baseUrl string) hardware.Service {
 	return &Node{baseUrl: baseUrl}
 }

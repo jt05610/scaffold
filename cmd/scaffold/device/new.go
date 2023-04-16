@@ -8,7 +8,7 @@ import (
 	"github.com/spf13/cobra"
 	"os"
 	"path"
-	"scaffold/node"
+	"scaffold/device"
 	"scaffold/node/yaml"
 )
 
@@ -33,7 +33,7 @@ var newCmd = &cobra.Command{
 		if err != nil {
 			panic(err)
 		}
-		node.NewNode(n, k, p, srv)
+		device.NewNode(n, k, p, srv)
 	},
 }
 

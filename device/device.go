@@ -1,4 +1,4 @@
-package node
+package device
 
 import (
 	"fmt"
@@ -8,16 +8,17 @@ import (
 	"os/user"
 	"path"
 	"scaffold/modbus"
+	"scaffold/node/hardware"
 	"time"
 )
 
 type Device struct {
 	Client      *modbus.Client
-	Nodes       []*Node
+	Nodes       []*hardware.Node
 	Address     string
 	Port        int
 	NodeDir     string
-	NodeService Service
+	NodeService hardware.Service
 }
 
 func (d *Device) Serve() {
@@ -81,7 +82,7 @@ func NewDevice(name string, dest string) {
 	}
 }
 
-func NewNode(name, kind, parent string, srv Service) {
+func NewNode(name, kind, parent string, srv hardware.Service) {
 	u, err := user.Current()
 	if err != nil {
 		panic(err)
@@ -91,76 +92,76 @@ func NewNode(name, kind, parent string, srv Service) {
 		panic(err)
 	}
 
-	n := &Node{
-		MetaData: MetaData{
+	n := &hardware.Node{
+		MetaData: hardware.MetaData{
 			Node:    name,
 			Author:  u.Name,
 			Address: byte(len(existing)),
 			Date:    time.Now().Format(time.RFC822),
 		},
-		Tables: map[string][]*Handler{
+		Tables: map[string][]*hardware.Handler{
 			"discrete_inputs": {
-				&Handler{
+				&hardware.Handler{
 					Name:        "discrete_input_1",
 					Description: "Discrete inputs are binary read only registers",
 					Params:      nil,
 				},
-				&Handler{
+				&hardware.Handler{
 					Name:        "discrete_input_2",
 					Description: "Add a new one like this",
 					Params:      nil,
 				},
 			},
 			"coils": {
-				&Handler{
+				&hardware.Handler{
 					Name:        "coil_1",
 					Description: "Coils are binary read/write registers. They are used to execute on/off functions on the target device",
-					Params: []map[string]*Param{
+					Params: []map[string]*hardware.Param{
 						{
-							"value": &Param{
+							"value": &hardware.Param{
 								Type:        "int",
 								Description: "Writing 0 will write 0 to the device. Writing anything else will write 1.",
 							},
 						},
 					},
 				},
-				&Handler{
+				&hardware.Handler{
 					Name:        "coil_2",
 					Description: "They can also be parameter-less if you want",
 					Params:      nil,
 				},
 			},
 			"input_registers": {
-				&Handler{
+				&hardware.Handler{
 					Name:        "input_register_1",
 					Description: "Input registers are 16-bit read only registers",
 					Params:      nil,
 				},
-				&Handler{
+				&hardware.Handler{
 					Name:        "input_register_2",
 					Description: "Add a new one like this",
 					Params:      nil,
 				},
 			},
 			"holding_registers": {
-				&Handler{
+				&hardware.Handler{
 					Name:        "holding_register_1",
 					Description: "Holding registers are 16-bit read/write registers. They are used to set variables on the device, and can execute a if desired",
-					Params: []map[string]*Param{
+					Params: []map[string]*hardware.Param{
 						{
-							"value": &Param{
+							"value": &hardware.Param{
 								Type:        "int",
 								Description: "Whatever you write will be converted to a uint16",
 							},
 						},
 					},
 				},
-				&Handler{
+				&hardware.Handler{
 					Name:        "holding_register_2",
 					Description: "Add a new one like this",
-					Params: []map[string]*Param{
+					Params: []map[string]*hardware.Param{
 						{
-							"value": &Param{
+							"value": &hardware.Param{
 								Type:        "int",
 								Description: "You technically don't need to include a parameter but you probably should",
 							},

@@ -6,7 +6,7 @@ package device
 
 import (
 	"github.com/spf13/cobra"
-	"scaffold/node"
+	"scaffold/device"
 )
 
 // initCmd represents the init command
@@ -23,7 +23,7 @@ var initCmd = &cobra.Command{
 		if err != nil {
 			panic(err)
 		}
-		node.NewDevice(n, d)
+		device.NewDevice(n, d)
 	},
 }
 

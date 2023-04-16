@@ -1,16 +1,17 @@
 package yaml
 
 import (
+	"scaffold/device"
 	"scaffold/modbus"
-	"scaffold/node"
+	"scaffold/node/hardware"
 )
 
-func NewYAMLDevice(addr string, port int, client *modbus.Client) *node.Device {
-	return &node.Device{
+func NewYAMLDevice(addr string, port int, client *modbus.Client) *device.Device {
+	return &device.Device{
 		Address:     addr,
 		Port:        port,
-		Nodes:       make([]*node.Node, 0),
+		Nodes:       make([]*hardware.Node, 0),
 		NodeService: NewYAMLService(),
-		Client: client,
+		Client:      client,
 	}
 }

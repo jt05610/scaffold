@@ -1,21 +1,21 @@
-package node_test
+package device_test
 
 import (
 	"go.uber.org/zap"
+	"scaffold/device"
 	"scaffold/modbus"
-	"scaffold/node"
 	"scaffold/node/yaml"
 	"testing"
 )
 
 func TestNewDevice(t *testing.T) {
-	node.NewDevice("fake_device", "./testingResult")
+	device.NewDevice("fake_device", "./testingResult")
 
 }
 
 func TestNewNode(t *testing.T) {
 	srv := yaml.NewYAMLService()
-	node.NewNode("fake_node", "software", "./testingResult/fake_device/nodes", srv)
+	device.NewNode("fake_node", "software", "./testingResult/fake_device/nodes", srv)
 }
 
 func TestLoadNodes(t *testing.T) {
