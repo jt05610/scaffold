@@ -42,8 +42,8 @@ var serveCmd = &cobra.Command{
 func init() {
 	deviceCmd.AddCommand(serveCmd)
 
-	serveCmd.PersistentFlags().StringP("nodes", "n", "", "node config directory")
-	serveCmd.PersistentFlags().IntP("port", "p", 8081, "node config directory")
-	serveCmd.PersistentFlags().StringP("address", "a", "127.0.0.1", "node config directory")
+	serveCmd.PersistentFlags().StringP("nodes", "n", "./nodes", "node config directory")
+	serveCmd.PersistentFlags().IntP("port", "p", 8081, "frontend port")
+	serveCmd.PersistentFlags().StringP("address", "a", "127.0.0.1", "address")
 
 }
