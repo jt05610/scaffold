@@ -56,7 +56,7 @@ func (d *Device) Load(nodeDir string) {
 			}
 			node, err := d.NodeService.Load(df)
 			node.Diag = bNode.Diag
-			node.client = d.Client
+			node.Client = d.Client
 			if err != nil {
 				panic(err)
 			}

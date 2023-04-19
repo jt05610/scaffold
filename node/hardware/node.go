@@ -38,7 +38,7 @@ type Node struct {
 	MetaData    `yaml:"meta"`
 	Tables      map[string][]*Handler `yaml:"tables"`
 	Diag        []*Handler            `yaml:"diag"`
-	client      *modbus.Client
+	Client      *modbus.Client
 	rfLookup    map[string]map[string]func(uint16, uint16) *pdu.ModbusPDU
 	addrLookup  map[string]uint16
 	paramLookup map[string]string
@@ -131,7 +131,7 @@ func (n *Node) handlers() map[string]http.HandlerFunc {
 					} else {
 						var bytes []byte
 						if r.Method == http.MethodGet {
-							res, err := n.client.Request(r.Context(), n.Address, reqFunc(n.addrLookup[r.RequestURI], 1))
+							res, err := n.Client.Request(r.Context(), n.Address, reqFunc(n.addrLookup[r.RequestURI], 1))
 							if err != nil || res == nil {
 								http.Error(w, err.Error(), http.StatusInternalServerError)
 								return
@@ -191,7 +191,7 @@ func (n *Node) handlers() map[string]http.HandlerFunc {
 								reqPDU = reqFunc(n.addrLookup[r.RequestURI], 1)
 							}
 
-							res, err := n.client.Request(r.Context(), n.Address, reqPDU)
+							res, err := n.Client.Request(r.Context(), n.Address, reqPDU)
 							if err != nil {
 								http.Error(w, "server error", http.StatusInternalServerError)
 								return
@@ -230,7 +230,7 @@ func (n *Node) Register(srv *http.ServeMux) {
 					http.Error(w, "bad request", http.StatusBadRequest)
 				}
 				req := pdu.Echo(body["message"]...)
-				res, err := n.client.Request(r.Context(), n.Address, req)
+				res, err := n.Client.Request(r.Context(), n.Address, req)
 				if err != nil {
 					http.Error(w, err.Error(), http.StatusInternalServerError)
 					return
