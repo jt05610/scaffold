@@ -8,7 +8,7 @@ import (
 	"github.com/spf13/cobra"
 	"go.uber.org/zap"
 	"scaffold/modbus"
-	"scaffold/node/yaml"
+	"scaffold/node/hardware/yaml"
 )
 
 // serveCmd represents the serve command

@@ -14,9 +14,14 @@ tags:
   authors:
 - name: Jonathan Taylor
   orcid: 0000-0001-5281-6990
-  equal-contrib: true
+  equal-contrib: false
   affiliation: "1"  
-
+- 
+- name: Uday Kompella
+  orcid: 
+  equal-contrib: false
+  affiliation: "1"  
+- 
   affiliations:
 - name: Skaggs School of Pharmacy and Pharmaceutical Sciences, University of Colorado Anschutz Medical Campus, Aurora, Colorado, USA.
   index: 1

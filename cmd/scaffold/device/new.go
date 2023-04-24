@@ -9,7 +9,7 @@ import (
 	"os"
 	"path"
 	"scaffold/device"
-	"scaffold/node/yaml"
+	"scaffold/node/hardware/yaml"
 )
 
 // newCmd represents the new command
@@ -18,7 +18,7 @@ var newCmd = &cobra.Command{
 	Short: "Create the project structure of a new node",
 	Long:  `Generate a project structure where you will define and store all code related to a new node`,
 	Run: func(cmd *cobra.Command, args []string) {
-		srv := yaml.NewYAMLService()
+		srv := yaml.NewYAMLHardwareService()
 		n, err := cmd.PersistentFlags().GetString("name")
 		if err != nil {
 			panic(err)

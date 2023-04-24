@@ -2,12 +2,12 @@ package yaml_test
 
 import (
 	"os"
-	"scaffold/node/yaml"
+	"scaffold/node/hardware/yaml"
 	"testing"
 )
 
 func TestNode_LoadFlush(t *testing.T) {
-	srv := yaml.NewYAMLService()
+	srv := yaml.NewYAMLHardwareService()
 	df, err := os.Open("../testing/node.yaml")
 	if err != nil {
 		t.Error(err)

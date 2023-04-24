@@ -2,23 +2,17 @@ package redis
 
 import (
 	"context"
-	"errors"
 	"github.com/redis/go-redis/v9"
 	"scaffold"
+	"scaffold/core/stream"
 	"time"
 )
-
-type Requester[T any] interface {
-	Request(ctx context.Context) error
-	Value() (interface{}, error)
-	Name() string
-}
 
 type Stream struct {
 	name     string
 	client   *redis.Client
 	interval time.Duration
-	requests []Requester[any]
+	requests []stream.Requester[any]
 }
 
 func (s *Stream) open() error {
@@ -79,48 +73,11 @@ func (s *Stream) Stream(ctx context.Context) error {
 	}
 }
 
-func NewRedisStream(name string, interval time.Duration, requests []Requester[any]) scaffold.Streamer {
+func NewRedisStream(name string, interval time.Duration,
+	requests []stream.Requester[any]) scaffold.Streamer {
 	return &Stream{
 		name:     name,
 		interval: interval,
 		requests: requests,
 	}
-}
-
-type Req[T any] struct {
-	v       T
-	name    string
-	err     error
-	call    func() (T, error)
-	resChan chan T
-}
-
-func (r *Req[T]) Request(ctx context.Context) (err error) {
-	go func() {
-		v, err := r.call()
-		if err != nil {
-			r.err = err
-		}
-		r.resChan <- v
-	}()
-	for {
-		select {
-		case <-ctx.Done():
-			return errors.New("timeout")
-		case r.v = <-r.resChan:
-			return r.err
-		}
-	}
-}
-
-func (r *Req[T]) Value() (interface{}, error) {
-	return r.v, r.err
-}
-
-func (r *Req[T]) Name() string {
-	return r.name
-}
-
-func NewReq[T any](name string, call func() (T, error)) Requester[T] {
-	return &Req[T]{name: name, call: call, resChan: make(chan T)}
 }

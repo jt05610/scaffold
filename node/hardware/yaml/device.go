@@ -11,7 +11,7 @@ func NewYAMLDevice(addr string, port int, client *modbus.Client) *device.Device 
 		Address:     addr,
 		Port:        port,
 		Nodes:       make([]*hardware.Node, 0),
-		NodeService: NewYAMLService(),
+		NodeService: NewYAMLHardwareService(),
 		Client:      client,
 	}
 }

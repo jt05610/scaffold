@@ -11,7 +11,7 @@ import (
 	"os"
 	"scaffold/modbus"
 	"scaffold/node/goClient"
-	"scaffold/node/yaml"
+	"scaffold/node/hardware/yaml"
 )
 
 // clientCmd represents the client command

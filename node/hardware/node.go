@@ -6,7 +6,6 @@ import (
 	"errors"
 	"fmt"
 	"github.com/iancoleman/strcase"
-	"io"
 	"net/http"
 	"net/url"
 	"scaffold/modbus"
@@ -249,9 +248,4 @@ func (n *Node) Register(srv *http.ServeMux) {
 			})
 		}
 	}
-}
-
-type Service interface {
-	Load(r io.Reader) (*Node, error)
-	Flush(w io.Writer, node *Node) error
 }
