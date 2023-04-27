@@ -2,6 +2,8 @@ meta:
   node: stream
   author: jtaylor
   date: 16 Apr 2023 2:04 AM MST
+  deps:
+    github.com/jt05610/scaffold/redis
 
 endpoints:
   - start:
@@ -12,5 +14,4 @@ endpoints:
       type: int
       docs: interval to make requests.
   - stop
-
 

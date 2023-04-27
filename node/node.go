@@ -5,14 +5,14 @@ import (
 	"net/http"
 )
 
-type Node interface {
+type BaseNode interface {
 	Register(srv *http.ServeMux)
-	Endpoints(base string) []*Endpoint
+	Endpoints() []string
 }
 
-type Service interface {
-	Load(r io.Reader) (Node, error)
-	Flush(w io.Writer, node Node) error
+type BaseNodeService interface {
+	Load(r io.Reader) (*BaseNode, error)
+	Flush(w io.Writer, node *BaseNode) error
 }
 
 type EndpointParam struct {
