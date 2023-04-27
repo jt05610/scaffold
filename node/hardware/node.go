@@ -35,7 +35,7 @@ type Handler struct {
 }
 
 type Node struct {
-	MetaData    `yaml:"meta"`
+	MetaData    `yaml:"metadata"`
 	Tables      map[string][]*Handler `yaml:"tables"`
 	Diag        []*Handler            `yaml:"diag"`
 	Client      *modbus.Client
