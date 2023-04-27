@@ -1,6 +1,6 @@
-module scaffold
+module github.com/jt05610/scaffold
 
-go 1.19
+go 1.20
 
 require (
 	github.com/iancoleman/strcase v0.2.0
